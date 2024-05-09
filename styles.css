@@ -1,0 +1,24 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#videoViewCount {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+#countdown {
+    font-size: 18px;
+}
+
