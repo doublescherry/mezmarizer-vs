@@ -1,37 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YouTube Video Views Counter</title>
+<title>YouTube動画再生回数とカウントダウン</title>
 </head>
 <body>
 <div id="videoViewCount"></div>
 <div id="countdown"></div>
 
 <script>
-// YouTube API Key (Replace 'YOUR_API_KEY' with your actual API Key)
+// YouTube APIキー（実際のAPIキーに置き換えてください）
 const API_KEY = 'AIzaSyD3-stJddvEwqrXCg-1vmlGgUxR9U3JQqw';
 
-// YouTube Video ID (Replace 'VIDEO_ID' with the ID of the video you want to get views for)
+// YouTube動画ID（再生回数を取得したい動画のIDに置き換えてください）
 const VIDEO_ID = '19y8YTbvri8';
 
-// Target end date and time (Year, Month (0-11), Day, Hour, Minute, Second)
+// 目標の日時（年、月（0-11）、日、時、分、秒）
 const targetDate = new Date(2024, 4, 13, 12, 53, 0);
 
-// Function to fetch video statistics
+// 動画の統計情報を取得する関数
 function fetchVideoStatistics() {
     fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${VIDEO_ID}&key=${API_KEY}`)
         .then(response => response.json())
         .then(data => {
             const viewCount = data.items[0].statistics.viewCount;
-            document.getElementById('videoViewCount').innerText = `Video View Count: ${viewCount}`;
+            document.getElementById('videoViewCount').innerText = `動画再生回数: ${viewCount} 回`;
             updateCountdown();
         })
-        .catch(error => console.error('Error fetching video statistics:', error));
+        .catch(error => console.error('動画統計情報を取得中にエラーが発生しました:', error));
 }
 
-// Function to update countdown
+// カウントダウンを更新する関数
 function updateCountdown() {
     const now = new Date();
     const timeDifference = targetDate - now;
@@ -42,13 +42,13 @@ function updateCountdown() {
         const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
         
-        document.getElementById('countdown').innerText = `Time remaining until ${targetDate.toLocaleString()}: ${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
+        document.getElementById('countdown').innerText = `目標までの残り時間 ${days} 日 ${hours} 時間 ${minutes} 分 ${seconds} 秒`;
     } else {
-        document.getElementById('countdown').innerText = 'Time is up!';
+        document.getElementById('countdown').innerText = '時間切れです！';
     }
 }
 
-// Call the function to fetch video statistics when the page loads
+// ページが読み込まれたときに動画の統計情報を取得する関数を呼び出す
 window.onload = fetchVideoStatistics;
 </script>
 </body>
