@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Video Views Counter</title>
+</head>
+<body>
+<div id="videoViewCount"></div>
+
+<script>
+// YouTube API Key (Replace 'YOUR_API_KEY' with your actual API Key)
+const API_KEY = 'AIzaSyD3-stJddvEwqrXCg-1vmlGgUxR9U3JQqw';
+
+// YouTube Video ID (Replace 'VIDEO_ID' with the ID of the video you want to get views for)
+const VIDEO_ID = '19y8YTbvri8';
+
+// Function to fetch video statistics
+function fetchVideoStatistics() {
+    fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${VIDEO_ID}&key=${API_KEY}`)
+        .then(response => response.json())
+        .then(data => {
+            const viewCount = data.items[0].statistics.viewCount;
+            document.getElementById('videoViewCount').innerText = `Video View Count: ${viewCount}`;
+        })
+        .catch(error => console.error('Error fetching video statistics:', error));
+}
+
+// Call the function to fetch video statistics when the page loads
+window.onload = fetchVideoStatistics;
+</script>
+</body>
+</html>
