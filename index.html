@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YouTube動画再生回数とカウントダウン</title>
+<title>メズマライザーvs寝起きヤシの木</title>
 </head>
 <body>
 <div id="videoViewCount"></div>
@@ -25,10 +25,10 @@ function fetchVideoStatistics() {
         .then(response => response.json())
         .then(data => {
             const viewCount = data.items[0].statistics.viewCount;
-            document.getElementById('videoViewCount').innerText = `動画再生回数: ${viewCount} 回`;
+            document.getElementById('videoViewCount').innerText = `現在のメズマライザー再生回数 ${viewCount} `;
             updateCountdown();
         })
-        .catch(error => console.error('動画統計情報を取得中にエラーが発生しました:', error));
+        .catch(error => console.error('再生回数を取得中にエラーが発生しました:', error));
 }
 
 // カウントダウンを更新する関数
@@ -42,9 +42,9 @@ function updateCountdown() {
         const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
         
-        document.getElementById('countdown').innerText = `目標までの残り時間 ${days} 日 ${hours} 時間 ${minutes} 分 ${seconds} 秒`;
+        document.getElementById('countdown').innerText = `記録更新までの残り時間 ${days} 日 ${hours} 時間 ${minutes} 分 ${seconds} 秒`;
     } else {
-        document.getElementById('countdown').innerText = '時間切れです！';
+        document.getElementById('countdown').innerText = '記録更新ならず...';
     }
 }
 
