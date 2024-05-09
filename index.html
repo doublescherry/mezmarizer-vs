@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+<link rel="stylesheet" type="text/css" href="styles.css" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>メズマライザーvs寝起きヤシの木</title>
@@ -49,7 +50,11 @@ function updateCountdown() {
 }
 
 // ページが読み込まれたときに動画の統計情報を取得する関数を呼び出す
-window.onload = fetchVideoStatistics;
+// window.onload = fetchVideoStatistics;
+document.addEventListener('DOMContentLoaded', function() {
+    fetchVideoStatistics();
+    setInterval(updateCountdown, 1000)
+});
 </script>
 </body>
 </html>
