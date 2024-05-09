@@ -27,6 +27,7 @@ function fetchVideoStatistics() {
         .then(data => {
             const viewCount = data.items[0].statistics.viewCount;
             document.getElementById('videoViewCount').innerText = `現在のメズマライザー再生回数 ${viewCount} `;
+               document.getElementById('difference').innerText = `1000万回再生まであと ${difference >= 0 ? difference : '達成！'}`;
             updateCountdown();
         })
         .catch(error => console.error('再生回数を取得中にエラーが発生しました:', error));
