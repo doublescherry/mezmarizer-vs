@@ -4,13 +4,17 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f0f0f0;
+    background-image: url('background_image.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px); /* 10pxのぼかし効果 */
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* コンテンツの背景色 */
 }
 
 #videoViewCount {
@@ -21,4 +25,3 @@ body {
 #countdown {
     font-size: 18px;
 }
-
