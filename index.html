@@ -1,39 +1,89 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<link rel="stylesheet" type="text/css" href="style.css" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>メズマライザーvs寝起きヤシの木</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@900&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzMKPXZY2ui1v5_nWSKkZnhnDSwDUAKCx-h_BXVuq4QA&s');
+    background-size: cover;
+    backdrop-filter: blur(5px);
+  }
+
+  .counter-container {
+    text-align: center;
+    color: white;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-weight: 900;
+    font-size: 5rem;
+    border: none;
+    letter-spacing: 0.1em;
+  }
+
+  .counter {
+    text-shadow: 0 0 8px black;
+  }
+
+  .counter-label {
+    font-size: 1.5rem;
+    text-shadow: 0 0 8px black;
+    margin-bottom: 50px;
+  }
+    
+  .counter.small {
+    font-size: 2rem;
+  }
+  
+  #countdown {
+    font-size: 1.2rem;
+    letter-spacing: 0em;
+    margin-top: 20px;
+    text-shadow: 0 0 8px black;
+  }
+  
+  #remaining {
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+    margin-top: 10px;
+    text-shadow: 0 0 8px black;
+  }
+  
+  #youtube-link {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-family: "Zen Kaku Gothic New", sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    color: white;
+    text-shadow: 0 0 8px black;
+    letter-spacing: 0.1em;
+  }
+</style>
 </head>
 <body>
-<div id="videoViewCount"></div>
-<div id="countdown"></div>
+  <a id="youtube-link" href="https://youtube.com/watch?v=19y8YTbvri8" target="_blank">🔗 Youtubeで聞く</a>
+  <div class="counter-container">
+    <div class="counter" id="videoViewCount">取得中... </div>
+    <div class="counter-label">現在の再生回数</div>
+    <div id="countdown"></div>
+    <div id="remaining"></div>
+  </div>
 
 <script>
-// YouTube APIキー（実際のAPIキーに置き換えてください）
-const API_KEY = 'AIzaSyD3-stJddvEwqrXCg-1vmlGgUxR9U3JQqw';
-
-// YouTube動画ID（再生回数を取得したい動画のIDに置き換えてください）
-const VIDEO_ID = '19y8YTbvri8';
-
-// 目標の日時（年、月（0-11）、日、時、分、秒）
 const targetDate = new Date(2024, 4, 13, 12, 53, 0);
 
-// 動画の統計情報を取得する関数
-function fetchVideoStatistics() {
-    fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${VIDEO_ID}&key=${API_KEY}`)
-        .then(response => response.json())
-        .then(data => {
-            const viewCount = data.items[0].statistics.viewCount;
-            document.getElementById('videoViewCount').innerText = `現在のメズマライザー再生回数 ${viewCount} `;
-               document.getElementById('difference').innerText = `1000万回再生まであと ${difference >= 0 ? difference : '達成！'}`;
-            updateCountdown();
-        })
-        .catch(error => console.error('再生回数を取得中にエラーが発生しました:', error));
-}
-
-// カウントダウンを更新する関数
 function updateCountdown() {
     const now = new Date();
     const timeDifference = targetDate - now;
@@ -44,18 +94,33 @@ function updateCountdown() {
         const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
         
-        document.getElementById('countdown').innerText = `記録更新までの残り時間 ${days} 日 ${hours} 時間 ${minutes} 分 ${seconds} 秒`;
+        document.getElementById('countdown').innerText = `記録更新まで残り 　${days} 日 ${hours} 時間 ${minutes} 分 ${seconds} 秒`;
     } else {
         document.getElementById('countdown').innerText = '記録更新ならず...';
     }
 }
 
-// ページが読み込まれたときに動画の統計情報を取得する関数を呼び出す
-// window.onload = fetchVideoStatistics;
-document.addEventListener('DOMContentLoaded', function() {
+window.onload = function() {
     fetchVideoStatistics();
-    setInterval(updateCountdown, 1000)
-});
+    updateCountdown();
+};
+
+setInterval(updateCountdown, 1000);
+
+function fetchVideoStatistics() {
+    const API_KEY = 'AIzaSyD3-stJddvEwqrXCg-1vmlGgUxR9U3JQqw';
+    const VIDEO_ID = '19y8YTbvri8';
+
+    fetch(`https://googleapis.com/youtube/v3/videos?part=statistics&id=${VIDEO_ID}&key=${API_KEY}`)
+        .then(response => response.json())
+        .then(data => {
+            const viewCount = data.items[0].statistics.viewCount;
+            document.getElementById('videoViewCount').innerText = `${viewCount} `;
+            const difference = 10000000 - viewCount;
+            document.getElementById('remaining').innerText = `あと ${difference >= 0 ? difference : '達成！'} 回再生`;
+        })
+        .catch(error => console.error('再生回数を取得中にエラーが発生しました:', error));
+}
 </script>
 </body>
 </html>
